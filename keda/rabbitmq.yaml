@@ -80,5 +80,3 @@ spec:
         host: amqp://default_user_hTGI6fJysyI9c7RTidD:FMRhoyqPbZ61JFquo9iN1diF5x8Gn2-X@10.43.93.95:5672/
         queueName: "bucket-notification-queue"
         queueLength: "5"
-      authenticationRef:
-        name: rabbitmq-consumer-trigger
