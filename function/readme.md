@@ -1,7 +1,8 @@
-# RabbitMQTrigger - C<span>#</span>
+# RabbitMQ triggered Keda Function
+This directory structure and Dockerfile are generated via [func](https://docs.microsoft.com/en-us/azure/azure-functions/functions-kubernetes-keda). 
 
-The `RabbitMQTrigger` makes it incredibly easy to react to new events from a RabbitMQ queue. This sample demonstrates a simple use case of processing data from a given RabbitMQ Queue using C#.
+# Model files
+[haarcascade_frontalface_default.xml](./haarcascade_frontalface_default.xml) is from [OpenCV](https://github.com/opencv/opencv/blob/master/data/haarcascades/haarcascade_frontalface_default.xml)
 
-## How it works
+The model for license plate detection is over Github object size, it is available in the [container image](quay.io/rootfs/kubecon21-demo:latest). The model is trained via [darknet](https://github.com/AlexeyAB/darknet) using [Vehicle Registration Plate class at Open Images Dataset](https://storage.googleapis.com/openimages/web/visualizer/index.html?set=train&type=segmentation&r=false&c=%2Fm%2F01jfm_)
 
-For a `RabbitMQTrigger` to work, you must provide a queue name which dictates where the queue messages should be read from.
