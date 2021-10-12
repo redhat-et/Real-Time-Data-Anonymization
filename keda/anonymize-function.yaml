@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rabbitmq-consumer
+  namespace: default
+  labels:
+    app: rabbitmq-consumer
+spec:
+  selector:
+    matchLabels:
+      app: rabbitmq-consumer
+  template:
+    metadata:
+      labels:
+        app: rabbitmq-consumer
+    spec:
+      containers:
+        - name: rabbitmq-consumer
+          image: quay.io/rootfs/kubecon21-demo:latest
+          imagePullPolicy: IfNotPresent
+          args:
+          - func.py
+          command:
+          - python3
+          env:
+          - name: AMQP_URL
+            valueFrom: 
+              secretKeyRef:
+                name: rabbitmq-consumer-secret
+                key: amqp_url
+          - name: AMQP_EXCHANGE
+            value: ex1
+          - name: AMQP_ROUTING_KEY
+            value: demo
+          - name: AMQP_QUEUE_NAME
+            value: bucket-notification-queue
+          - name: AWS_ENDPOINT_URL
+            valueFrom: 
+              secretKeyRef:
+                name: rgw-s3-credential
+                key: aws_endpoint_url
+          - name: AWS_ACCESS_KEY_ID
+            valueFrom: 
+              secretKeyRef:
+                name: rgw-s3-credential
+                key: aws_key_id
+          - name: AWS_SECRET_ACCESS_KEY
+            valueFrom: 
+              secretKeyRef:
+                name: rgw-s3-credential
+                key: aws_access_key

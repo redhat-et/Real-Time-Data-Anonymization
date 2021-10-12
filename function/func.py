@@ -131,10 +131,8 @@ def receive():
 
     connection = pika.BlockingConnection(pika.URLParameters(amqp_url))
     channel = connection.channel()
-    result = channel.queue_declare(queue=amqp_queue_name)
-    queue_name = result.method.queue
-    channel.queue_bind(exchange=amqp_exchange, queue=queue_name, routing_key=amqp_routing)
-    channel.basic_consume(queue=queue_name, on_message_callback=callback, auto_ack=True)
+    channel.queue_bind(exchange=amqp_exchange, queue=amqp_queue_name, routing_key=amqp_routing)
+    channel.basic_consume(queue=amqp_queue_name, on_message_callback=callback, auto_ack=True)
     print('starting listening to message queue {}/{}'.format(amqp_exchange, amqp_queue_name))
     channel.start_consuming()
 
