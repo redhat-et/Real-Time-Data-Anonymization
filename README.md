@@ -69,7 +69,7 @@ kubectl apply -f keda/anonymize-function.yaml
 ## Push images to bucket
 ```bash
 RGW_MY_STORE=$(kubectl get service -n rook-ceph rook-ceph-rgw-my-store -o jsonpath='{.spec.clusterIP}')
-while true; do file=$(date +%Y-%m-%d-%H-%M-%S)".jpg"; aws --endpoint-url http://$RGW_MY_STORE:80 s3 cp test.jpg s3://notification-demo-bucket/$file;sleep 3;done
+while true; do file=$(date +%Y-%m-%d-%H-%M-%S)".jpg"; aws --endpoint-url http://$RGW_MY_STORE:80 s3 cp test/image.jpg s3://notification-demo-bucket/$file;sleep 3;done
 ```
 
 ## Watch Keda operator logs
