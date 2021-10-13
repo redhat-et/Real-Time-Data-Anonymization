@@ -49,24 +49,25 @@ sh scripts/rabbitmq-declare-queue.sh
 ```bash
 sh scripts/create-s3-bucket-notification.sh
 ```
+# Start Keda and Serverless function
+Ensure `helm` v3 is [installed](https://helm.sh/docs/intro/install/) locally, then 
+```bash
+sh scripts/install-keda.sh
+kubectl apply -f keda/anonymize-function.yaml
+```
 
 # Generate and apply Kubernetes Secrets for AWS and AMQP credentials 
 ```bash
 sh scripts/create-k8s-secret.sh
 ```
-Now apply the secrets file `secrets.yaml`
+Now apply the generated secrets file `secrets.yaml`
 ```bash
-kubectl apply -f scripts/secrets.yaml
+kubectl apply -f secrets.yaml
 ```
 
-# Start Keda and Serverless function
-Ensure `helm` v3 is installed locally, then 
-```bash
-sh scripts/install-keda.sh
-kubectl apply -f keda/anonymize-function.yaml
-```
 # Test
 ## Push images to bucket
+Make sure that the `awscli` tool is [installed](https://docs.aws.amazon.com/cli/latest/userguide/install-linux.html) locally.
 ```bash
 RGW_MY_STORE=$(kubectl get service -n rook-ceph rook-ceph-rgw-my-store -o jsonpath='{.spec.clusterIP}')
 while true; do file=$(date +%Y-%m-%d-%H-%M-%S)".jpg"; aws --endpoint-url http://$RGW_MY_STORE:80 s3 cp test/image.jpg s3://notification-demo-bucket/$file;sleep 3;done
