@@ -4,6 +4,8 @@ This repo contains demo for KubeCon 2021 talk [Real-Time Data Anonymization the 
 ](https://kccncna2021.sched.com/event/lV3P/real-time-data-anonymization-the-serverless-way-yuval-lifshitz-huamin-chen-red-hat?iframe=no)
 
 
+[![Demo](https://img.youtube.com/vi/iOQ9npYnmk8/0.jpg)](https://www.youtube.com/watch?v=iOQ9npYnmk8 "Demo")
+
 # MicroShift
 Install [microshift](https://github.com/redhat-et/microshift)
 
