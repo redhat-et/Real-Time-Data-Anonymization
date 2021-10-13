@@ -14,11 +14,9 @@ apiVersion: objectbucket.io/v1alpha1
 kind: ObjectBucketClaim
 metadata:
   name: ceph-delete-bucket
+  labels:
+    bucket-notification-my-notification: my-notification
 spec:
   bucketName: notification-demo-bucket
   storageClassName: rook-ceph-delete-bucket-my-store
-  additionalConfig:
-    # To set for quota for OBC
-    #maxObjects: "1000"
-    #maxSize: "2G"
 EOF
