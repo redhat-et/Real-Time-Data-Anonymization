@@ -51,7 +51,7 @@ sh scripts/rabbitmq-declare-queue.sh
 ```bash
 sh scripts/create-s3-bucket-notification.sh
 ```
-# Start Keda and Serverless function
+# Start KEDA and Serverless function
 Ensure `helm` v3 is [installed](https://helm.sh/docs/intro/install/) locally, then 
 ```bash
 sh scripts/install-keda.sh
@@ -75,7 +75,7 @@ RGW_MY_STORE=$(kubectl get service -n rook-ceph rook-ceph-rgw-my-store -o jsonpa
 while true; do file=$(date +%Y-%m-%d-%H-%M-%S)".jpg"; aws --endpoint-url http://$RGW_MY_STORE:80 s3 cp test/image.jpg s3://notification-demo-bucket/$file;sleep 3;done
 ```
 
-## Watch Keda operator logs
+## Watch KEDA operator logs
 ```bash
 kubectl logs -n keda  -l app=keda-operator -f
 ```

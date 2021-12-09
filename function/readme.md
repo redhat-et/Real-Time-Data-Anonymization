@@ -1,4 +1,4 @@
-# RabbitMQ triggered Keda Function
+# RabbitMQ triggered KEDA Function
 This directory structure and Dockerfile are generated via [func](https://docs.microsoft.com/en-us/azure/azure-functions/functions-kubernetes-keda). 
 
 # Model files
