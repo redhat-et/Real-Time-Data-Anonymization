@@ -28,24 +28,24 @@ data:
   aws_key_id: ${aws_key_id}
   aws_endpoint_url: ${aws_url}
 ---
-apiVersion: keda.k8s.io/v1alpha1
+apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:
   name: rabbitmq-consumer
   namespace: default
 spec:
   scaleTargetRef:
-    deploymentName: rabbitmq-consumer
+    name: rabbitmq-consumer
   triggers:
     - type: rabbitmq
       metadata:
-        host: amqp://${username}:${password}@${service}:5672
         queueName: "bucket-notification-queue"
-        queueLength: "5"
+        mode: "QueueLength"
+        value: "5"
       authenticationRef:
         name: rabbitmq-consumer-trigger
 ---
-apiVersion: keda.k8s.io/v1alpha1
+apiVersion: keda.sh/v1alpha1
 kind: TriggerAuthentication
 metadata:
   name: rabbitmq-consumer-trigger
