@@ -7,7 +7,10 @@ This repo contains demo for KubeCon 2021 talk [Real-Time Data Anonymization the 
 [![Demo](https://img.youtube.com/vi/iOQ9npYnmk8/0.jpg)](https://www.youtube.com/watch?v=iOQ9npYnmk8 "Demo")
 
 # MicroShift
-Install [microshift](https://github.com/redhat-et/microshift)
+Install [microshift](https://github.com/redhat-et/microshift).
+
+> Note that Ceph needs at least one extra disk to run, and since microshift runs directly on the host, and extra physical disk is needed (e.g. attach a USB drive).
+If this is not possible, we would recommend running microshift inside a VM, and attach an extra virtual disk to the VM.
 
 ## Create default storage provisioner
 ```bash
