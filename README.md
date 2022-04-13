@@ -5,6 +5,7 @@ This repo contains demo for KubeCon 2021 talk [Real-Time Data Anonymization the 
 
 
 [![Demo](https://img.youtube.com/vi/iOQ9npYnmk8/0.jpg)](https://www.youtube.com/watch?v=iOQ9npYnmk8 "Demo")
+> Note that the video refers to an older version of Rook and Ceph where more manual steps were needed
 
 # MicroShift
 Install [microshift](https://github.com/redhat-et/microshift).
@@ -17,8 +18,6 @@ If this is not possible, we would recommend running microshift inside a VM, and 
 sh scripts/microshift-default-storageclass.sh
 ```
 # Rook
-> since bucket notification support is still work-in-progress, replace image in: `operator.yaml` with: `quay.io/ylifshit/rook-ceph`
-> in order to workaround an issue with rabbitmq, replace the ceph image in: `cluster-test.yaml` with `quay.io/ceph-ci/ceph:wip-yuval-fix-50611`
 ```bash
 sh scripts/install-rook.sh
 ```
@@ -27,17 +26,6 @@ sh scripts/install-rook.sh
 ```bash
 sh scripts/s3-bucket.sh
 ```
-## workround plaintext password limitation
-to workaround the rabbitmq issue, change the following conf parameter in the RGW:
-```bash
-kubectl -n rook-ceph exec -it deploy/rook-ceph-tools -- ceph config set client.rgw.my.store.a rgw_allow_secrets_in_cleartext true
-kubectl -n rook-ceph exec -it deploy/rook-ceph-tools -- ceph config set  client.rgw.my.store.a debug_rgw 10
-```
-
-# Apply RGW S3 Environment Variables
-```bash
-source scripts/s3-env.sh
-```
 
 # Install RabbitMQ and declare exchange and queue
 install the rabbitmq operator
@@ -45,7 +33,7 @@ install the rabbitmq operator
 sh scripts/install-rabbitmq.sh
 ```
  
-Create exchange,queue, and routing key using the RGW bucket notification topic name
+Create exchange, queue, and routing key using the RGW bucket notification topic name
 ```bash
 sh scripts/rabbitmq-declare-queue.sh
 ```
@@ -54,6 +42,7 @@ sh scripts/rabbitmq-declare-queue.sh
 ```bash
 sh scripts/create-s3-bucket-notification.sh
 ```
+
 # Start KEDA and Serverless function
 Ensure `helm` v3 is [installed](https://helm.sh/docs/intro/install/) locally, then 
 ```bash
@@ -61,13 +50,9 @@ sh scripts/install-keda.sh
 kubectl apply -f keda/anonymize-function.yaml
 ```
 
-# Generate and apply Kubernetes Secrets for AWS and AMQP credentials 
+# Generate and apply Kubernetes Secrets for AWS and AMQP and the KEDA scaler
 ```bash
 sh scripts/create-k8s-secret.sh
-```
-Now apply the generated secrets file `secrets.yaml`
-```bash
-kubectl apply -f secrets.yaml
 ```
 
 # Test

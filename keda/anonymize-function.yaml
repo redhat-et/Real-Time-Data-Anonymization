@@ -37,15 +37,15 @@ spec:
           - name: AWS_ENDPOINT_URL
             valueFrom: 
               secretKeyRef:
-                name: rgw-s3-credential
+                name: rgw-s3-url
                 key: aws_endpoint_url
           - name: AWS_ACCESS_KEY_ID
             valueFrom: 
               secretKeyRef:
-                name: rgw-s3-credential
-                key: aws_key_id
+                name: ceph-delete-bucket
+                key: AWS_ACCESS_KEY_ID
           - name: AWS_SECRET_ACCESS_KEY
             valueFrom: 
               secretKeyRef:
-                name: rgw-s3-credential
-                key: aws_access_key
+                name: ceph-delete-bucket
+                key: AWS_SECRET_ACCESS_KEY
